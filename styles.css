@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "FocusFlow Sans";
+  src: url("./assets/fonts/focusflow-sans.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FocusFlow Serif";
+  src: url("./assets/fonts/focusflow-serif.ttf") format("truetype");
+  font-display: swap;
+}
+
 :root {
   --bg: #f3efe6;
   --panel: #fffdfa;
@@ -18,7 +30,7 @@
 
 body {
   margin: 0;
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-family: "FocusFlow Sans", "Segoe UI", sans-serif;
   color: var(--text);
   min-height: 100vh;
   background: linear-gradient(160deg, #efe7db, #f7f2eb 45%, #fdfaf5);
@@ -75,7 +87,7 @@ body {
 h1,
 h2 {
   margin: 0;
-  font-family: "ZCOOL XiaoWei", serif;
+  font-family: "FocusFlow Serif", serif;
   font-weight: 400;
 }
 
