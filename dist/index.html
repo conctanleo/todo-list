@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusFlow 番茄待办</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/assets/index-kURC9cR2.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-FacB2KaE.css">
+  </head>
+  <body>
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">FOCUSFLOW</p>
+          <h1>待办事项番茄钟</h1>
+        </div>
+        <div class="topbar-actions">
+          <p class="today" id="todayLabel"></p>
+          <button id="desktopSettingsToggle" type="button" class="ghost compact">
+            桌面设置
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel todo-panel">
+          <div class="panel-head">
+            <h2>任务清单</h2>
+            <div class="todo-count" id="todoCount">0 项任务</div>
+          </div>
+
+          <form id="todoForm" class="todo-form">
+            <input
+              id="todoInput"
+              type="text"
+              maxlength="120"
+              placeholder="输入一个你现在要完成的任务..."
+              autocomplete="off"
+              required
+            />
+            <button type="submit">添加</button>
+          </form>
+
+          <div class="filters" id="filterGroup">
+            <button class="filter active" data-filter="all" type="button">全部</button>
+            <button class="filter" data-filter="active" type="button">进行中</button>
+            <button class="filter" data-filter="done" type="button">已完成</button>
+          </div>
+
+          <ul class="todo-list" id="todoList"></ul>
+        </section>
+
+        <section class="panel timer-panel">
+          <h2>专注计时器</h2>
+
+          <div class="mode-switch" id="modeSwitch">
+            <button class="mode active" data-mode="focus" type="button">专注</button>
+            <button class="mode" data-mode="shortBreak" type="button">短休息</button>
+            <button class="mode" data-mode="longBreak" type="button">长休息</button>
+          </div>
+
+          <div class="clock">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="track" cx="60" cy="60" r="52"></circle>
+              <circle class="progress" id="progressCircle" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="clock-content">
+              <p id="modeLabel">专注时间</p>
+              <p id="timeDisplay">25:00</p>
+            </div>
+          </div>
+
+          <div class="active-task" id="activeTaskDisplay">当前专注任务：未选择</div>
+
+          <div class="controls">
+            <button id="startPauseBtn" type="button">开始</button>
+            <button id="resetBtn" type="button" class="ghost">重置</button>
+            <button id="skipBtn" type="button" class="ghost">跳过</button>
+          </div>
+
+          <div class="durations">
+            <label>
+              专注(分钟)
+              <input id="focusDuration" type="number" min="5" max="90" />
+            </label>
+            <label>
+              短休息(分钟)
+              <input id="shortBreakDuration" type="number" min="1" max="30" />
+            </label>
+            <label>
+              长休息(分钟)
+              <input id="longBreakDuration" type="number" min="5" max="60" />
+            </label>
+          </div>
+        </section>
+      </main>
+
+      <section class="panel stats-panel">
+        <h2>今日进度</h2>
+        <div class="stats-grid">
+          <article>
+            <p class="stat-value" id="todayFocusSessions">0</p>
+            <p class="stat-label">完成番茄数</p>
+          </article>
+          <article>
+            <p class="stat-value" id="todayCompletedTasks">0</p>
+            <p class="stat-label">完成任务数</p>
+          </article>
+          <article>
+            <p class="stat-value" id="estimatedFocusTime">0 分钟</p>
+            <p class="stat-label">累计专注时长</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel desktop-panel hidden" id="desktopPanel">
+        <div class="panel-head">
+          <h2>桌面设置</h2>
+        </div>
+        <div class="desktop-settings">
+          <label class="setting-row">
+            <span>到点桌面通知</span>
+            <input id="notificationsEnabled" type="checkbox" />
+          </label>
+          <label class="setting-row">
+            <span>关闭窗口后最小化到托盘</span>
+            <input id="minimizeToTray" type="checkbox" />
+          </label>
+          <label class="setting-row">
+            <span>开机自启</span>
+            <input id="autoStartEnabled" type="checkbox" />
+          </label>
+          <div class="setting-actions">
+            <button id="testNotificationBtn" type="button" class="ghost">测试通知</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

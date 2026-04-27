@@ -1,0 +1,18 @@
+[package]
+name = "focusflow_desktop"
+version = "0.1.0"
+description = "FocusFlow Linux desktop app"
+authors = ["OpenAI Codex"]
+edition = "2021"
+
+[lib]
+name = "focusflow_desktop"
+crate-type = ["cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-autostart = "2"
+tauri-plugin-notification = "2"
