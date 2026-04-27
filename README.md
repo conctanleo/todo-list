@@ -22,7 +22,11 @@ sudo apt install libwebkit2gtk-4.1-dev \
 ### Tooling
 
 - Node.js 20+
-- Rust via `rustup` (1.77.2+)
+- Rust via `rustup` (1.77.2+) with `cargo` available on `PATH`
+
+## Current Environment Note
+
+In the current verification environment, desktop verification is blocked because `cargo` is unavailable on `PATH`. Until Rust is installed via `rustup` and `cargo` is on `PATH`, `npm run tauri:build` and `npm run tauri:dev` will not work here.
 
 ## Development
 
@@ -48,6 +52,6 @@ npm run tauri:build
 1. Launch the app and confirm the existing layout matches the web version.
 2. Add, complete, and delete todos.
 3. Start a focus session, finish it, and confirm the desktop notification appears.
-4. Close the window and confirm the app stays available in the tray.
+4. Enable the minimize-to-tray setting, close the window, and confirm the app stays available in the tray.
 5. Restore the window from the tray.
 6. Toggle autostart and relaunch the session to verify the state is persisted.
