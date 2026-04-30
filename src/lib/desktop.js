@@ -50,6 +50,7 @@ export function createTraySyncController({
   supportsTooltip,
   supportsTitle,
   supportsLeftClickMenu,
+  recreateOnTitleChange = false,
   onBeforeQuit
 }) {
   let tray = null;
@@ -79,6 +80,8 @@ export function createTraySyncController({
 
   async function applySnapshot(snapshot) {
     const nextMenuNeeded = !tray || !lastSnapshot || snapshot.toggleLabel !== lastSnapshot.toggleLabel;
+    const recreateTrayNeeded =
+      Boolean(tray) && recreateOnTitleChange && snapshot.title !== lastSnapshot?.title;
 
     if (!tray) {
       const nextMenu = await buildMenu(snapshot.toggleLabel);
@@ -91,6 +94,29 @@ export function createTraySyncController({
         });
         menu = nextMenu;
         lastSnapshot = snapshot;
+      } catch (error) {
+        await closeResourceQuietly(nextMenu);
+        throw error;
+      }
+      return;
+    }
+
+    if (recreateTrayNeeded) {
+      const nextMenu = await buildMenu(snapshot.toggleLabel);
+      try {
+        const nextTray = await createTrayIcon({
+          menu: nextMenu,
+          tooltip: supportsTooltip ? snapshot.tooltip : undefined,
+          title: supportsTitle ? snapshot.title : undefined,
+          showMenuOnLeftClick: supportsLeftClickMenu
+        });
+        const previousTray = tray;
+        const previousMenu = menu;
+        tray = nextTray;
+        menu = nextMenu;
+        lastSnapshot = snapshot;
+        await closeResourceQuietly(previousMenu);
+        await closeResourceQuietly(previousTray);
       } catch (error) {
         await closeResourceQuietly(nextMenu);
         throw error;
@@ -217,6 +243,7 @@ export async function createDesktopBridge() {
     supportsTooltip: !hasLinuxUserAgent(),
     supportsTitle: hasLinuxUserAgent(),
     supportsLeftClickMenu: !hasLinuxUserAgent(),
+    recreateOnTitleChange: hasLinuxUserAgent(),
     onBeforeQuit: async () => {
       allowWindowClose = true;
     },

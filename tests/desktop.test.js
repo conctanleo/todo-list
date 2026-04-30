@@ -218,6 +218,68 @@ test('createTraySyncController replaces and closes the old menu when the toggle 
   ]);
 });
 
+test('createTraySyncController can recreate the tray icon when only the Linux title changes', async () => {
+  const operations = [];
+
+  const controller = createTraySyncController({
+    supportsTitle: true,
+    supportsTooltip: false,
+    supportsLeftClickMenu: false,
+    recreateOnTitleChange: true,
+    async createMenu({ toggleLabel }) {
+      operations.push(`createMenu:${toggleLabel}`);
+      return {
+        async close() {
+          operations.push(`closeMenu:${toggleLabel}`);
+        }
+      };
+    },
+    async createTrayIcon({ title, tooltip, showMenuOnLeftClick }) {
+      operations.push(`createTray:${title}:${tooltip}:${showMenuOnLeftClick}`);
+      return {
+        async setMenu() {
+          operations.push('setMenu');
+        },
+        async setTooltip(value) {
+          operations.push(`setTooltip:${value}`);
+        },
+        async setTitle(value) {
+          operations.push(`setTitle:${value}`);
+        },
+        async close() {
+          operations.push(`closeTray:${title}`);
+        }
+      };
+    }
+  });
+
+  const request = {
+    isRunning: true,
+    modeLabel: '专注时间',
+    onShowWindow: async () => {},
+    onToggleTimer: async () => {},
+    onQuit: async () => {}
+  };
+
+  await controller.sync({
+    ...request,
+    timeDisplay: '25:00'
+  });
+  await controller.sync({
+    ...request,
+    timeDisplay: '24:59'
+  });
+
+  assert.deepEqual(operations, [
+    'createMenu:暂停计时',
+    'createTray:专注时间 25:00:undefined:false',
+    'createMenu:暂停计时',
+    'createTray:专注时间 24:59:undefined:false',
+    'closeMenu:暂停计时',
+    'closeTray:专注时间 25:00'
+  ]);
+});
+
 test('hasTauriRuntime stays false outside a browser runtime', () => {
   assert.equal(hasTauriRuntime(), false);
 });
