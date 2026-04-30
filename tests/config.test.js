@@ -34,11 +34,13 @@ test('tauri build config points at vite output', () => {
   const tauriConfig = JSON.parse(fs.readFileSync(tauriConfigPath, 'utf8'));
   assert.equal(tauriConfig.build.devUrl, 'http://localhost:5173');
   assert.equal(tauriConfig.build.frontendDist, '../dist');
+  assert.deepEqual(tauriConfig.bundle.targets, ['deb', 'msi', 'nsis']);
   assert.deepEqual(tauriConfig.bundle.icon, [
     'icons/32x32.png',
     'icons/128x128.png',
     'icons/128x128@2x.png',
-    'icons/icon.png'
+    'icons/icon.png',
+    'icons/icon.ico'
   ]);
 });
 
@@ -68,6 +70,7 @@ test('rust manifest and capabilities include tray, notification, autostart, and 
 test('tauri icon assets exist for desktop builds', () => {
   assert.ok(fs.existsSync(tauriIconDir), 'src-tauri/icons should exist');
   assert.ok(fs.existsSync(path.join(tauriIconDir, 'icon.png')), 'src-tauri/icons/icon.png should exist');
+  assert.ok(fs.existsSync(path.join(tauriIconDir, 'icon.ico')), 'src-tauri/icons/icon.ico should exist');
   assert.ok(fs.existsSync(path.join(tauriIconDir, '32x32.png')), 'src-tauri/icons/32x32.png should exist');
   assert.ok(fs.existsSync(path.join(tauriIconDir, '128x128.png')), 'src-tauri/icons/128x128.png should exist');
   assert.ok(

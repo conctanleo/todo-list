@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-linux-release:
+  linux-release:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -33,14 +33,52 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Build and publish Debian bundle
+      - name: Build and publish Linux bundle
         uses: tauri-apps/tauri-action@v0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: FocusFlow ${{ github.ref_name }}
-          releaseBody: Linux Debian package for this version.
+          releaseBody: Cross-platform desktop bundles for this version.
           releaseDraft: false
           prerelease: false
           args: --bundles deb
+
+  windows-release:
+    needs: linux-release
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build and publish Windows bundles
+        uses: tauri-apps/tauri-action@v0.6.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: FocusFlow ${{ github.ref_name }}
+          releaseBody: Cross-platform desktop bundles for this version.
+          releaseDraft: false
+          prerelease: false
+          args: --bundles msi,nsis
+
+      # Future code-signing hook:
+      # add WINDOWS_CERTIFICATE and WINDOWS_CERTIFICATE_PASSWORD secrets,
+      # then run signtool against the generated installers before publishing.
