@@ -213,7 +213,9 @@ export function createFallbackDesktopBridge() {
     async sendTimerNotification() {},
     async syncTray() {},
     async installCloseGuard() {},
-    async requestQuit() {}
+    async requestQuit() {},
+    async createLockScreen() {},
+    async closeLockScreen() {}
   };
 }
 
@@ -339,6 +341,33 @@ export async function createDesktopBridge() {
     },
     syncTray,
     installCloseGuard,
-    requestQuit
+    requestQuit,
+    async createLockScreen({ taskName, durationSeconds }) {
+      const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow');
+      const lockWin = new WebviewWindow('lock-screen', {
+        url: `index.html#lock-screen?task=${encodeURIComponent(taskName)}&duration=${durationSeconds}`,
+        fullscreen: true,
+        alwaysOnTop: true,
+        decorations: false,
+        skipTaskbar: true,
+        closable: false,
+        minimizable: false,
+        maximizable: false,
+        resizable: false,
+        focus: true
+      });
+      lockWin.onCloseRequested((event) => {
+        event.preventDefault();
+      });
+    },
+    async closeLockScreen() {
+      try {
+        const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow');
+        const lockWin = WebviewWindow.getByLabel('lock-screen');
+        if (lockWin) {
+          await lockWin.close();
+        }
+      } catch {}
+    }
   };
 }
