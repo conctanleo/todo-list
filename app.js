@@ -324,6 +324,20 @@ async function completeCurrentSession({ skipped }) {
 
   const activeTodo = state.todos.find((todo) => todo.id === state.selectedTodoId);
 
+  if (!skipped && desktop?.isDesktop && activeTodo?.eyeProtection) {
+    showToast('护眼模式将在 3 秒后启动');
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    try {
+      await desktop.createLockScreen({
+        taskName: activeTodo.text,
+        durationSeconds: 300
+      });
+    } catch (error) {
+      console.error(error);
+      showToast('护眼模式启动失败');
+    }
+  }
+
   if (!skipped) {
     playBell();
     if (state.preferences.notificationsEnabled) {
