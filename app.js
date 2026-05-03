@@ -51,10 +51,14 @@ let ticker = null;
 let toastTimer = null;
 let desktop = null;
 
-initialize().catch((error) => {
-  console.error(error);
-  showToast("桌面模块初始化失败，已回退为基础模式");
-});
+if (location.hash.startsWith('#lock-screen')) {
+  import('./src/lib/lock-screen.js').then(m => m.initLockScreen()).catch(console.error);
+} else {
+  initialize().catch((error) => {
+    console.error(error);
+    showToast("桌面模块初始化失败，已回退为基础模式");
+  });
+}
 
 async function initialize() {
   refs.progressCircle.style.strokeDasharray = String(CIRCLE_LENGTH);
