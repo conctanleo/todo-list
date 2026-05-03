@@ -344,6 +344,7 @@ export async function createDesktopBridge() {
     requestQuit,
     async createLockScreen({ taskName, durationSeconds }) {
       const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow');
+      try { WebviewWindow.getByLabel('lock-screen')?.close(); } catch {}
       const lockWin = new WebviewWindow('lock-screen', {
         url: `index.html#lock-screen?task=${encodeURIComponent(taskName)}&duration=${durationSeconds}`,
         fullscreen: true,

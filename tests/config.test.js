@@ -51,7 +51,7 @@ test('rust manifest and capabilities include tray, notification, autostart, and 
   const cargoManifest = fs.readFileSync(cargoManifestPath, 'utf8');
   assert.match(
     cargoManifest,
-    /tauri = \{ version = "2", features = \["tray-icon"\] \}/,
+    /tauri = \{ version = "2", features = \[.*"tray-icon".*\] \}/,
     'src-tauri/Cargo.toml should enable the tauri tray-icon feature'
   );
 
