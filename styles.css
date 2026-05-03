@@ -148,6 +148,22 @@ h2 {
   gap: 0.5rem;
 }
 
+.eye-protection-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.eye-protection-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-2);
+}
+
 input[type="text"],
 input[type="number"] {
   width: 100%;

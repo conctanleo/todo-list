@@ -23,6 +23,7 @@ const refs = {
   desktopPanel: document.getElementById("desktopPanel"),
   todoForm: document.getElementById("todoForm"),
   todoInput: document.getElementById("todoInput"),
+  eyeProtectionCheckbox: document.getElementById("eyeProtectionCheckbox"),
   todoCount: document.getElementById("todoCount"),
   todoList: document.getElementById("todoList"),
   filterGroup: document.getElementById("filterGroup"),
@@ -207,9 +208,11 @@ function addTodo(text) {
     pomodoros: 0,
     createdAt: Date.now(),
     completedAt: null,
+    eyeProtection: refs.eyeProtectionCheckbox.checked
   };
   state.todos.unshift(todo);
   if (!state.selectedTodoId) state.selectedTodoId = todo.id;
+  refs.eyeProtectionCheckbox.checked = false;
   saveState();
   renderAll();
   showToast("任务已添加");
