@@ -65,6 +65,9 @@ test('rust manifest and capabilities include tray, notification, autostart, and 
   assert.ok(capability.permissions.includes('core:window:allow-show'));
   assert.ok(capability.permissions.includes('core:window:allow-close'));
   assert.ok(capability.permissions.includes('core:window:allow-set-focus'));
+  assert.ok(capability.permissions.includes('core:webview:allow-create-webview-window'));
+  assert.ok(capability.permissions.includes('core:window:allow-set-fullscreen'));
+  assert.ok(capability.permissions.includes('core:window:allow-set-always-on-top'));
 });
 
 test('tauri icon assets exist for desktop builds', () => {
