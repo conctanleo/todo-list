@@ -443,6 +443,7 @@ function renderTodos() {
             <div class="todo-meta">
               <span>🍅 ${todo.pomodoros}</span>
               <span>创建于 ${created}</span>
+              ${todo.eyeProtection ? '<span class="eye-badge">👁 护眼</span>' : ''}
             </div>
           </div>
           <div class="todo-actions">

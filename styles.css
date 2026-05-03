@@ -689,3 +689,8 @@ circle {
 .btn-confirm:hover {
   background: #6aae7e;
 }
+
+.eye-badge {
+  color: #3f7d74;
+  font-size: 0.76rem;
+}
