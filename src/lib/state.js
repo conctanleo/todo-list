@@ -63,6 +63,10 @@ export function normalizeState(raw) {
 
   merged.filter = ['all', 'active', 'done'].includes(merged.filter) ? merged.filter : 'all';
   merged.todos = Array.isArray(merged.todos) ? merged.todos : [];
+  merged.todos = merged.todos.map(todo => ({
+    ...todo,
+    eyeProtection: Boolean(todo.eyeProtection)
+  }));
   merged.focusHistory = Array.isArray(merged.focusHistory) ? merged.focusHistory : [];
 
   if (!['focus', 'shortBreak', 'longBreak'].includes(merged.timer.mode)) {
