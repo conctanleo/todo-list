@@ -514,3 +514,162 @@ circle {
     grid-template-columns: 1fr;
   }
 }
+
+/* Lock Screen */
+.lock-container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  max-width: 480px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.lock-icon {
+  font-size: 4rem;
+  animation: float-icon 4s ease-in-out infinite;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.lock-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #7ecb8a;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.lock-task {
+  font-size: 1.1rem;
+  color: #b8dcc3;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 203, 138, 0.15);
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.countdown {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.time {
+  font-size: 4.5rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: #d4f0d4;
+  text-shadow: 0 0 60px rgba(126, 203, 138, 0.25);
+  font-variant-numeric: tabular-nums;
+}
+
+.time-sub {
+  font-size: 0.88rem;
+  color: #6b9e78;
+}
+
+.tip-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(126, 203, 138, 0.12);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+}
+
+.tip-icon {
+  font-size: 1.6rem;
+}
+
+.tip-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #b8dcc3;
+  white-space: pre-line;
+}
+
+.skip-btn {
+  background: transparent;
+  border: 1px solid rgba(126, 203, 138, 0.25);
+  color: #8ab89a;
+  padding: 0.7rem 1.6rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+  margin-top: 0.5rem;
+}
+
+.skip-btn:hover {
+  background: rgba(126, 203, 138, 0.1);
+  border-color: rgba(126, 203, 138, 0.4);
+  color: #c8e8d0;
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 10;
+}
+
+.confirm-box {
+  background: #2d4a3e;
+  border: 1px solid rgba(126, 203, 138, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.confirm-text {
+  font-size: 1rem;
+  color: #d4f0d4;
+  margin: 0;
+}
+
+.confirm-buttons {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.btn-cancel, .btn-confirm {
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: #b8dcc3;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn-confirm {
+  background: #5b9a6e;
+  color: #fff;
+}
+
+.btn-confirm:hover {
+  background: #6aae7e;
+}
